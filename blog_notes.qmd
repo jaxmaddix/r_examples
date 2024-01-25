@@ -1,0 +1,40 @@
+---
+title: "Blog Notes"
+author: "Jaxson Freund"
+format: 
+  html:
+    toc: true
+editor: source
+---
+
+##  There are three components to a Quarto document
+
+1. The YML header: 
+      * YML = yet another markup language
+      * parameters that define what output will look like
+      * can define table  of contects, etc
+2. Prose aka text
+      * you can make text  **bold**
+      * make text *italic*
+3. Code chunks
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r , echo=TRUE , message=FALSE , warning=FALSE}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
