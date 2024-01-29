@@ -11,13 +11,13 @@ From January 1-15, 2024, I visited Costa Rica as a class trip. I conducted an ob
 ## Data
 ```{r}
 # vector x (distance from main colony entrance)
-x <- c(0, 6, 12, 18, 3, 9, 15, 21, 1, 7, 13, 19, -2, 4, 10, 16, 22, 2, 8, 14, 20, -1, 5, 11, 17, 23)
+x <- c(0, 6, 12, 18, 3, 9, 15, 21, 1, 7, 13, 19, -2, 4, 10, 16, 22)
 
 # vector y (leaf pass in quadrat)
-y <- c(4, 1, 0.5, 0.2, 2.5, 0.5, 0.3, 0.2, 3.9, 0.6, 2.1, 0.3, 0.7, 1.2, 1.4, 0.9, 0.4, , , , , , , , , )
+y <- c(4, 1, 0.5, 0.2, 2.5, 0.5, 0.3, 0.2, 3.9, 0.6, 2.1, 0.3, 0.7, 1.2, 1.4, 0.9, 0.4)
 
 # vector z (leaf count in quadrat)
-z <- c(124, 43, 21,  9, 118, 22, 9, 7, 137, 46, 95, 15, 36, 76, 88, 44,  21, , , , , , , , , )
+z <- c(124, 43, 21,  9, 118, 22, 9, 7, 137, 46, 95, 15, 36, 76, 88, 44,  21)
 
 ```
 
@@ -68,6 +68,7 @@ b <- coef(fit)[2]
 eq <- sprintf("y = %.2f * exp(%.2fx)", a, b)
 text(3, max(y), eq, pos = 4, col = "black", cex = 0.8)
 ```
+
 ## Plot Leaf Count vs. Distance
 ```{R}
 plot(x, z, main = "Leaf Count vs. Distance from Main Colony Entrance", xlab = "Distance (m)", ylab = "Leaf Count", col = "red", pch = 16)
@@ -80,3 +81,30 @@ b <- coef(fit)[2]
 eq <- sprintf("z = %.2f * exp(%.2fx)", a, b)
 text(3, max(z), eq, pos = 4, col = "black", cex = 0.8)
 ```
+
+## Plot both Leaf Count and Mass vs. Distance on the same graph
+```{R}
+# Set up the first plotting region
+# Set up the plotting region
+par(mar = c(5, 4, 4, 2) + 0.1, oma = c(0, 0, 0, 1))
+plot(x, y, type = "p", col = "blue", pch = 16, ylab = "Y", xlab = "X-axis")
+
+# Overlay the second set of points
+par(new = TRUE)
+plot(x, z, type = "p", col = "red", pch = 16, ylab = "", xlab = "")
+
+
+# Add a y-axis on the right side for Z
+axis(4, col = "black", col.axis = "black", las = 1)  # Set color for Z axis
+
+# Remove the Y2 axis label on the left side
+axis(2, col = "transparent", col.lab = "transparent")
+
+# Add a label on the right side for Y2
+mtext("Z", side = 4, line = 2, col = "black", cex = 1.2)  # Adjust line and cex as needed
+
+# Add a legend
+legend("topright", legend = c("Y", "Z"), col = c("blue", "red"), pch = 16)
+```
+
+
