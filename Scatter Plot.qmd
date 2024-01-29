@@ -24,24 +24,22 @@ z <- c(124, 43, 21,  9, 118, 22, 9, 7, 137, 46, 95, 15, 36, 76, 88, 44,  21)
 ## Sort based on X
 ```{r}
 #create a data  frame
-data <- data.frame(x = x, y = y, z = z)
+data <- data.frame(x = x, y = y, z = z, d = y/z)
 
 # Use order to get the indices that would sort the data frame by x
 order_indices <- order(data$x)
 
 # Use the indices to reorder the data frame
 sorted_data <- data[order_indices, ]
-```
-## Display the sorted data
-```{R}
 # Display the sorted data frame
 print(sorted_data)
 ```
+
 ## Format the table
 ```{R}
 #change row headers
 colnames(sorted_data) <-
-c("Distance (m)", "Leaf Mass (g)", "Leaf Count")
+c("Distance (m)", "Leaf Mass (g)", "Leaf Count", "Average Mass per Leaf")
 #remove indices on the left side
 print(sorted_data, row.names = FALSE)
 
