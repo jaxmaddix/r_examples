@@ -8,7 +8,7 @@
 
 <meta name="author" content="Jaxson Freund">
 
-<title>Notes: Date Calculation in R</title>
+<title>Scatter Plot</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,43 +58,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="Notes_date_calculation_in_R_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Notes_date_calculation_in_R_files/libs/quarto-html/quarto.js"></script>
-<script src="Notes_date_calculation_in_R_files/libs/quarto-html/popper.min.js"></script>
-<script src="Notes_date_calculation_in_R_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="Notes_date_calculation_in_R_files/libs/quarto-html/anchor.min.js"></script>
-<link href="Notes_date_calculation_in_R_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Notes_date_calculation_in_R_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Notes_date_calculation_in_R_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="Notes_date_calculation_in_R_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Notes_date_calculation_in_R_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script src="Scatter Plot_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Scatter Plot_files/libs/quarto-html/quarto.js"></script>
+<script src="Scatter Plot_files/libs/quarto-html/popper.min.js"></script>
+<script src="Scatter Plot_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Scatter Plot_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Scatter Plot_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Scatter Plot_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Scatter Plot_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Scatter Plot_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Scatter Plot_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
 
-<body>
+<body class="fullcontent">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#source" id="toc-source" class="nav-link active" data-scroll-target="#source">Source</a></li>
-  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">Goal</a></li>
-  <li><a href="#usefulness-of-time-maniuplation" id="toc-usefulness-of-time-maniuplation" class="nav-link" data-scroll-target="#usefulness-of-time-maniuplation">Usefulness of Time Maniuplation</a></li>
-  <li><a href="#base-r-functions" id="toc-base-r-functions" class="nav-link" data-scroll-target="#base-r-functions">Base R Functions</a></li>
-  <li><a href="#lubridate-package" id="toc-lubridate-package" class="nav-link" data-scroll-target="#lubridate-package">Lubridate Package</a></li>
-  <li><a href="#adjusting-a-vector-of-times" id="toc-adjusting-a-vector-of-times" class="nav-link" data-scroll-target="#adjusting-a-vector-of-times">Adjusting a Vector of Times</a></li>
-  <li><a href="#subtracting-from-a-time-interval" id="toc-subtracting-from-a-time-interval" class="nav-link" data-scroll-target="#subtracting-from-a-time-interval">Subtracting from a Time Interval</a></li>
-  </ul>
-</nav>
-</div>
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Notes: Date Calculation in R</h1>
+<h1 class="title">Scatter Plot</h1>
 </div>
 
 
@@ -115,52 +101,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="source" class="level2">
-<h2 class="anchored" data-anchor-id="source">Source</h2>
-<p>This article is by R-Bloggers. It can be found at this link:</p>
-<p>https://www.r-bloggers.com/2024/01/mastering-date-calculations-in-r-a-guide-to-calculating-months-with-base-r-and-lubridate-2/</p>
-</section>
-<section id="goal" class="level2">
-<h2 class="anchored" data-anchor-id="goal">Goal</h2>
-<p>This article examines how to subtract hours from time objects in R. They show how to use two methods, base R functions and the lubridate package. I will be focusing on the basic R method.</p>
-</section>
-<section id="usefulness-of-time-maniuplation" class="level2">
-<h2 class="anchored" data-anchor-id="usefulness-of-time-maniuplation">Usefulness of Time Maniuplation</h2>
-<p>Subtracting hours can be useful for * adjusting for different timezones * calculating time differences between events * shifting time points in a time series analysis</p>
-</section>
-<section id="base-r-functions" class="level2">
-<h2 class="anchored" data-anchor-id="base-r-functions">Base R Functions</h2>
-<p>In base R, you can perform arithmetic operations on time objects. Subtraction can be accomplished using the <em>POSIXct</em> class.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a POSIXct object representing a specific time</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>my_time <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">"2024-01-25 10:00:00"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Subtract 2 hours from the original time</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>new_time <span class="ot">&lt;-</span> my_time <span class="sc">-</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the original and modified times</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-01-25 10:00:00 EST"</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x=</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">+</span> <span class="fl">0.1</span><span class="sc">*</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)<span class="sc">*</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) , <span class="dv">100</span> , <span class="at">replace=</span>T),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y=</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">+</span> <span class="fl">0.2</span><span class="sc">*</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)<span class="sc">*</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) , <span class="dv">100</span> , <span class="at">replace=</span>T)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic scatterplot</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x=</span>data<span class="sc">$</span>x, <span class="at">y=</span>data<span class="sc">$</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Scatter-Plot_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(new_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-01-25 08:00:00 EST"</code></pre>
-</div>
-</div>
-</section>
-<section id="lubridate-package" class="level2">
-<h2 class="anchored" data-anchor-id="lubridate-package">Lubridate Package</h2>
-<p>This package provides additional date/time functions.</p>
-</section>
-<section id="adjusting-a-vector-of-times" class="level2">
-<h2 class="anchored" data-anchor-id="adjusting-a-vector-of-times">Adjusting a Vector of Times</h2>
-<p>You can also shift a vector containing multiple time objects. This process requires lubridate.</p>
-</section>
-<section id="subtracting-from-a-time-interval" class="level2">
-<h2 class="anchored" data-anchor-id="subtracting-from-a-time-interval">Subtracting from a Time Interval</h2>
-<p>Lubridate is also useful if you are working with atime interval rather than a single moment in time. You can shift the entire interval using lubridate functions, but this task would be much more complicated in base R.</p>
-</section>
 
 </main>
 <!-- /main column -->

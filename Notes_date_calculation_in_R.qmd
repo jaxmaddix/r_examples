@@ -7,6 +7,11 @@ format:
       theme: darkly
 editor: source
 ---
+## Source
+
+This article is by R-Bloggers. It can be found at this link:  
+
+https://www.r-bloggers.com/2024/01/mastering-date-calculations-in-r-a-guide-to-calculating-months-with-base-r-and-lubridate-2/
 
 ## Goal
 
