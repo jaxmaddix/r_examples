@@ -12,7 +12,7 @@ editor: source
 1. The YML header: 
       * YML = yet another markup language
       * parameters that define what output will look like
-      * can define table  of contects, etc
+      * can define table  of contents, etc
 2. Prose aka text
       * you can make text  **bold**
       * make text *italic*

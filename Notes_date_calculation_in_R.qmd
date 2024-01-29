@@ -1,0 +1,51 @@
+---
+title: "Notes: Date Calculation in R"
+author: "Jaxson Freund"
+format: 
+  html:
+      toc: true
+      theme: darkly
+editor: source
+---
+
+## Goal
+
+This article examines how to subtract hours from time objects in R. They show how to use two methods, base R functions and the lubridate package. I will be focusing on the basic R method.
+
+## Usefulness of Time Maniuplation
+
+Subtracting hours can be useful for
+* adjusting for different timezones
+* calculating time differences between events
+* shifting time points in a time series analysis
+
+## Base R Functions
+
+In base R, you can perform arithmetic operations on time objects. Subtraction can be accomplished using the *POSIXct* class.
+
+```{R}
+# Create a POSIXct object representing a specific time
+my_time <- as.POSIXct("2024-01-25 10:00:00")
+# Subtract 2 hours from the original time
+new_time <- my_time - (2 * 60 * 60)
+# Print the original and modified times
+print(my_time)
+
+```
+
+```{R}
+print(new_time)
+```
+
+## Lubridate Package
+
+This package provides additional date/time functions.
+
+## Adjusting a Vector of Times
+
+You can also shift a vector containing multiple time objects. This process requires lubridate. 
+
+## Subtracting from a Time Interval
+
+Lubridate is also useful if you are working with atime interval rather than a single moment in time. You can shift the entire interval using lubridate functions, but this task would be much more complicated in base R.
+
