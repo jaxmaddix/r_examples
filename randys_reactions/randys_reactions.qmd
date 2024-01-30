@@ -1,0 +1,18 @@
+---
+title: "Randy's Reactions"
+format: html
+editor: source
+---
+
+## Homework January 28, 2024
+
+NICE WORK!  I really appreciate the effort you put into this, and the outputs show it!  Some notes:
+
+* Keep those notes on date calculation, esp the 'lubridate' package.  Dealing with dates can be a pain, so I am glad you dug into this.  Thank you for including the URL.
+* With your Scatter Plot work
+    * again-nice work
+    * I really appreciated the context at the top
+    * I wondered how you got a negative distance ("-2")  I am guessing this could be an issue with directionality?
+    * I am guessing it was rewarding to sort and rename columns-check out the janitor package sometime for cleaning up column names, etc.'
+    * Note line 48-I think you meant to say "Leaf Mass"?
+    * Beautiful comments
