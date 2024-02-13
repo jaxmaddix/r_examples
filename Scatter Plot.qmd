@@ -106,5 +106,3 @@ mtext("Z", side = 4, line = 2, col = "black", cex = 1.2)  # Adjust line and cex 
 # Add a legend
 legend("topright", legend = c("Y", "Z"), col = c("blue", "red"), pch = 16)
 ```
-
-
