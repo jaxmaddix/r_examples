@@ -29,9 +29,9 @@ Over the course it is expected you will:
 
 ## Personal objectives
 
-* Write everything in Quarto
-* Complete a workflowR website https://workflowr.github.io/workflowr/
+-   Write everything in Quarto
+-   Complete a workflowR website https://workflowr.github.io/workflowr/
 
 ## Progress tracking
 
-* Met week of February 6, 2024
+-   Met week of February 6, 2024
