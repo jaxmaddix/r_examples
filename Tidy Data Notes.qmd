@@ -1,0 +1,46 @@
+---
+title: "Tidy Data Notes"
+format: html
+editor: source
+---
+
+## Introduction
+data preparation
+* outlier checking
+* data parsing
+* missing value imupation
+
+tidying: structuring datasets to facilitate analysis
+
+## Defining tidy data
+link structure (physicallayout) with semantics (meaning).
+
+1.) Data Structure
+* rows and columns
+2.) Semantics
+* collection of values
+  * numbers of strings
+  * belong to a variable and an observation
+3.) Tidy Data
+Each variable forms a column, each observation forms a row, and each type of observational unit forms a table.
+
+## Tidying messy datasets
+### column headers are values, not variable names
+Tabular data designed for presentation.
+Melt/stack it.
+
+###  multiple variables stored in one column
+Column headers mashed together.
+Split into separate columns.
+
+### variables stored in rows and columns
+
+### multiple types in one table
+
+###  one type in multiple tables
+
+
+## Tidy Tools
+* manipulations: filter, transform, aggregate, sort
+* visualization
+* modelling
