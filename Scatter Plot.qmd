@@ -87,22 +87,37 @@ text(3, max(z), eq, pos = 4, col = "black", cex = 0.8)
 # Set up the first plotting region
 # Set up the plotting region
 par(mar = c(5, 4, 4, 2) + 0.1, oma = c(0, 0, 0, 1))
-plot(x, y, type = "p", col = "blue", pch = 16, ylab = "Y", xlab = "X-axis")
+plot(x, y, type = "p", col = "blue", pch = 16, ylab = "Mass", xlab = "Distance", axes = TRUE)
+
+#Add an exponential line of best fit
+fit <- lm(log(y) ~ x)
+
+# Generate predicted values for the exponential fit
+x_pred <- seq(min(x), max(x), length.out = 100)
+y_pred <- exp(predict(fit, newdata = data.frame(x = x_pred)))
+
+# Add the exponential line to the plot
+lines(x_pred, y_pred, col = "blue", type = "l")
+
 
 # Overlay the second set of points
 par(new = TRUE)
-plot(x, z, type = "p", col = "red", pch = 16, ylab = "", xlab = "")
+plot(x, z, type = "p", col = "red", pch = 16, ylab = "", xlab = "", axes = FALSE)
 
+#Add line of best fit
+fit <- lm(log(z) ~ x)
+x_pred <- seq(min(x), max(x), length.out = 100)
+z_pred <- exp(predict(fit, newdata = data.frame(x = x_pred)))
+lines(x_pred, z_pred, col = "red", type = "l")
+
+
+# Add a label on the right side for Y2
+mtext("Count", side = 4, line = 2, col = "black", cex = 1.2)  # Adjust line and cex as needed
 
 # Add a y-axis on the right side for Z
 axis(4, col = "black", col.axis = "black", las = 1)  # Set color for Z axis
 
-# Remove the Y2 axis label on the left side
-axis(2, col = "transparent", col.lab = "transparent")
-
-# Add a label on the right side for Y2
-mtext("Z", side = 4, line = 2, col = "black", cex = 1.2)  # Adjust line and cex as needed
-
 # Add a legend
-legend("topright", legend = c("Y", "Z"), col = c("blue", "red"), pch = 16)
+legend("topright", legend = c("Mass", "Count"), col = c("blue", "red"), pch = 16)
 ```
+

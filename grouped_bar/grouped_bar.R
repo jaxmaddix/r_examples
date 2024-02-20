@@ -10,7 +10,7 @@
 
 library(tidyverse)
 
-data <- read_csv("grouped_bar/bps_evt_glaba.csv")
+data <- read.csv("Documents/r_examples/grouped_bar/bps_evt_glaba.csv")
 
 
 # wrangle data -----

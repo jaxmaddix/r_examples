@@ -1,0 +1,191 @@
+---
+title: "ggplot_tutorial"
+format: html
+editor: source
+---
+
+```{R, echo=FALSE, include=FALSE}
+library(ggplot2)
+library(tibble)
+library(tidyr)
+library(forcats)
+library(purrr)
+library(prismatic)
+library(corrr)
+library(cowplot)
+library(ggforce)
+library(ggrepel)
+library(ggridges)
+library(ggsci)
+library(ggtext)
+library(ggthemes)
+library(grid)
+library(gridExtra)
+library(patchwork)
+library(rcartocolor)
+library(scico)
+library(showtext)
+library(shiny)
+library(plotly)
+library(highcharter)
+library(echarts4r)
+```
+
+```{R}
+chic <- readr::read_csv("https://cedricscherer.com/data/chicago-nmmaps-custom.csv")
+tibble::glimpse(chic)
+
+head(chic, 10)
+```
+## default ggplot
+```{R}
+library(ggplot2)
+
+(g <- ggplot(chic, aes(x = date, y = temp)))
+
+g + geom_point()
+
+g + geom_line()
+
+g + geom_line() + geom_point()
+```
+
+### change properties of geometries
+```{R}
+g + geom_point(color = "firebrick", shape = "diamond", size = 2)
+
+g + geom_point(color = "firebrick", shape = "diamond", size = 2) +
+  geom_line(color = "firebrick", linetype = "dotted", lwd = .3)
+```
+
+### replace theme
+```{R}
+#set default theme for future graphs
+theme_set(theme_bw())
+
+g + geom_point(color = "firebrick")
+```
+
+## working with axes
+### add axis titles
+```{R}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)")
+```
+
+### add degree symbol and exponent
+```{R}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = expression(paste("Temperature (", degree ~ F, ")"^"(Hey, why should we use metric units?!)")))
+```
+
+### move position of axis titles
+```{R}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)") +
+  theme(axis.title.x = element_text(vjust = 0, size = 15),
+        axis.title.y = element_text(vjust = 2, size = 15))
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)") +
+  theme(axis.title.x = element_text(margin = margin(t = 10), size = 15),
+        axis.title.y = element_text(margin = margin(r = 10), size = 15))
+```
+
+### change aesthetics of axis titles
+```{R}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)") +
+  theme(axis.title = element_text(size = 15, color = "firebrick",
+                                  face = "italic"))
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)") +
+  theme(axis.title.x = element_text(color = "sienna", size = 15),
+        axis.title.y = element_text(color = "orangered", size = 15))
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)") +
+  theme(axis.title = element_text(color = "sienna", size = 15, face = "bold"),
+        axis.title.y = element_text(face = "bold.italic"))
+```
+
+### change aesthetics of axis text
+```{R}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)") +
+  theme(axis.text = element_text(color = "dodgerblue", size = 12),
+        axis.text.x = element_text(face = "italic"))
+```
+
+### rotate axis text
+```{R}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)") +
+  theme(axis.text.x = element_text(angle = 50, vjust = 1, hjust = 1, size = 12))
+```
+
+### remove axis text and tics
+```{R}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)") +
+  theme(axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = NULL, y = "")
+#null removes space too
+```
+
+### limit axis range
+```{R}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature (°F)") +
+  ylim(c(0, 50))
+```
+
+### force plot to start at origin
+```{R}
+chic_high <- dplyr::filter(chic, temp > 25, o3 > 20)
+
+ggplot(chic_high, aes(x = temp, y = o3)) +
+  geom_point(color = "darkcyan") +
+  labs(x = "Temperature higher than 25°F",
+       y = "Ozone higher than 20 ppb") +
+  expand_limits(x = 0, y = 0)
+```
+
+### axes with same scaling
+```{R}
+ggplot(chic, aes(x = temp, y = temp + rnorm(nrow(chic), sd = 20))) +
+  geom_point(color = "sienna") +
+  labs(x = "Temperature (°F)", y = "Temperature (°F) + random noise") +
+  xlim(c(0, 100)) + ylim(c(0, 150)) +
+  coord_fixed()
+
+ggplot(chic, aes(x = temp, y = temp + rnorm(nrow(chic), sd = 20))) +
+  geom_point(color = "sienna") +
+  labs(x = "Temperature (°F)", y = "Temperature (°F) + random noise") +
+  xlim(c(0, 100)) + ylim(c(0, 150)) +
+  coord_fixed(ratio = 1/5)
+```
+
+### use a function to alter labels
+```{R}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = NULL) +
+  scale_y_continuous(label = function(x) {return(paste(x, "Degrees Fahrenheit"))})
+```
