@@ -189,3 +189,4 @@ ggplot(chic, aes(x = date, y = temp)) +
   labs(x = "Year", y = NULL) +
   scale_y_continuous(label = function(x) {return(paste(x, "Degrees Fahrenheit"))})
 ```
+
