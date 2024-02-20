@@ -1,0 +1,57 @@
+---
+title: "chord_diag"
+format: html
+editor: source
+---
+
+
+#### Exploring conversion with a chord diagram ####
+# approach typically used to look at migration
+# more informative than a grouped bar chart for example as you can look at 'per place' (e.g., acre or county) 'replacement'
+# confuses some people so make sure to include text information
+# this data is for broad ecosystem types within the Great Lakes watershed boundary
+
+```{R}
+# Set CRAN mirror
+options(repos = c(CRAN = "https://cran.r-project.org"))
+
+# Load necessary packages
+install.packages(c("pacman", "chorddiag", "htmlwidgets", "tidyverse", "Matrix", "tidygraph"))
+library(pacman)
+p_load(chorddiag, htmlwidgets, tidyverse, Matrix, tidygraph)
+
+# Read in and wrangle data
+chord_df <- read_csv("chord_demo/bps2evt_chord.csv")
+if (exists("chord_df")) {
+  # Convert data to matrix using tidygraph
+  matrix_df <- as_adjacency_matrix(as_tbl_graph(chord_df), attr = "ACRES")
+
+  # Clean up matrix
+  matrix_df <- matrix_df[-c(8:16), -c(1:7)]
+
+  # Make a custom color palette
+  groupColors <- c("#1d4220", "#fc9d03", ...)
+
+  # Make chord diagram
+  chord <- chorddiag(data = matrix_df,
+                     type = "bipartite",
+                     groupColors = groupColors,
+                     groupnamePadding = 10,
+                     groupPadding = 3,
+                     groupnameFontsize = 12,
+                     showTicks = FALSE,
+                     margin = 130,
+                     tooltipGroupConnector = "    &#x25B6;    ",
+                     chordedgeColor = "#363533"
+  )
+
+  # Save chord diagram as HTML with a white background
+  htmlwidgets::saveWidget(chord,
+                          "chord.html",
+                          background = "white",
+                          selfcontained = TRUE
+  )
+} else {
+  cat("Error: Unable to read the CSV file.\n")
+}
+```

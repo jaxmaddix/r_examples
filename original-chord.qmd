@@ -1,0 +1,85 @@
+---
+title: "original_chord_code"
+format: html
+editor: source
+---
+
+```{R}
+install.packages('pacman')
+library(pacman)
+library(htmlwidgets)
+library(chorddiag)
+library(htmlwidgets)
+library(igraph)
+library(readr)
+library(tidygraph)
+library(tidyverse)
+
+install.packages("Matrix", repos="http://R-Forge.R-project.org")
+
+p_load(chorddiag, htmlwidgets, tidyverse,tidygraph)
+
+
+
+# read in and wrangle data ------
+# read in data
+chord_df <- read_csv("chord_demo/bps2evt_chord.csv")
+#view(histFireGVchord)
+
+#convert data to matrix
+matrix_df <- as.matrix(as_adjacency_matrix(as_tbl_graph(chord_df),
+                                           attr = "ACRES"))
+
+library(htmlwidgets)
+library(chorddiag)
+library(htmlwidgets)
+library(igraph)
+library(readr)
+library(tidygraph)
+library(tidyverse)
+#clean up matrix to remove empty rows.  Specifics will change depending on inputs.
+matrix_df <- matrix_df[-c(8:16), -c(1:7)]
+
+#make a custom color pallet ------
+
+groupColors <-c( "#1d4220", # conifer 
+                 "#fc9d03", # grassland
+                 "#56bf5f", # hardwood
+                 "#397d3f", # hardwood-conifer 
+                 "#7db7c7", # riparian 
+                 "#f57fdf", # savannah
+                 "#6e4f1e", # shrubland
+                 "#f5e942", # cur ag
+                 "#1d4220", # cur conifer
+                 "#397d3f", # cur hdw-con
+                 "#b0af9e", # developed
+                 "#eb4034", # exotics
+                 "#fc9d03", # grassland
+                 "#56bf5f", # hardwood
+                 "#7db7c7",
+                 "#6e4f1e"# shrubland
+)
+
+
+
+# make chord diagram ------
+chord<-chorddiag(data = matrix_df,
+                 type = "bipartite",
+                 groupColors = groupColors,
+                 groupnamePadding = 10,
+                 groupPadding = 3,
+                 groupnameFontsize = 12 ,
+                 showTicks = FALSE,
+                 margin=130,
+                 tooltipGroupConnector = "    &#x25B6;    ",
+                 chordedgeColor = "#363533"
+)
+chord 
+
+#save then print to have white background
+htmlwidgets::saveWidget(chord,
+                        "chord.html",
+                        background = "white",
+                        selfcontained = TRUE
+```
+
