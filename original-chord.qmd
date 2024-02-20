@@ -80,6 +80,6 @@ chord
 htmlwidgets::saveWidget(chord,
                         "chord.html",
                         background = "white",
-                        selfcontained = TRUE
+                        selfcontained = TRUE)
 ```
 
