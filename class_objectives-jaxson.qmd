@@ -35,3 +35,9 @@ Over the course it is expected you will:
 ## Progress tracking
 
 -   Met week of February 6, 2024
+
+My main goal in this class is not necessarily to know how to do specific tasks from memory, but rather to understand how to approach R, figure out where to start on specific tasks, and get better at troubleshooting. So far, I think I have achieved these goals. Although I think I work slower at computer problems than othere students, I have been able to eventually figure out any issues and complete all the tasks I have attempted so far.
+
+I think my understanding of how to approach R has increased dramatically. I now understand the basic steps of creating and manipulating datasets, including the general steps to modify and visualize data in different ways. These skills are very useful and in the past when I had previously tried to learn R, I didn't even get as far as making a dataframe. Therefore, I think I have made great progress relative to my starting point.
+
+Although I might not ultimately end up with as polished a product, and may take much longer to complete tasks, I am proud of the work I have put in to practice these skills and get more comfortable with the program. My current level of understanding of R and what it can do will definitely allow me to use it in the future, instead of using brute force to accomplish data analysis in excel, which is what I used to have to do.
