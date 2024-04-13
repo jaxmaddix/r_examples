@@ -229,7 +229,7 @@ Present for Pine-Oak
 print(present3)
 ```
 
-### Labels
+## Labels
 ```{R, echo = FALSE}
 # extract the succession class labels from the df
 succession_class <- label_value1$LABEL
@@ -239,7 +239,7 @@ Succession Classes
 print(succession_class)
 ```
 
-### Test Graph
+## Test Graph
 Data Frame:
 ```{R, echo = FALSE}
 past1_fake <- c(1, 2, 3, 4)  # Sample values for past1
@@ -277,7 +277,7 @@ ggplot(melted_data_12, aes(x = succession_class_12, y = value, fill = variable))
   coord_flip()
 ```
 
-### Graph
+## Graph
 ```{R, echo = FALSE}
 # Convert succession_class to factor with unique levels
 succession_class <- factor(succession_class, levels = unique(succession_class))
