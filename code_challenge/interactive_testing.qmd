@@ -1,0 +1,52 @@
+---
+title: "Interactive Tests"
+format: html
+editor: source
+---
+```{R}
+install.packages("shiny")
+library(shiny)
+```
+
+```{R}
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+
+# Create an example dataframe with row names
+df <- data.frame(
+  Name = c("Alice", "Bob", "Charlie", "David"),
+  Age = c(25, 30, 35, 40),
+  Gender = c("Female", "Male", "Male", "Male")
+)
+
+# Assign row names to the dataframe
+rownames(df) <- c("Row1", "Row2", "Row3", "Row4")
+
+# Print the dataframe
+print(df)
+
+
+# Define UI
+ui <- fluidPage(
+  titlePanel("Check/Uncheck Rows"),
+  fluidRow(
+    column(6, checkboxGroupInput("checkGroup", "Check Rows", choices = rownames(df)))
+  ),
+  fluidRow(
+    column(12, tableOutput("checkedTable"))
+  )
+)
+
+# Define server logic
+server <- function(input, output) {
+  # Display table with checked rows
+  output$checkedTable <- renderTable({
+    req(input$checkGroup)
+    checked_rows <- input$checkGroup
+    df[checked_rows, , drop = FALSE]
+  }, rownames = TRUE)
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
