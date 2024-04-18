@@ -3,49 +3,51 @@ title: "Interactive Tests"
 format: html
 editor: source
 ---
-
 ```{R}
-library(shiny)
-```
+library(crosstalk)
+library(DT)
 
-```{R}
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-
-
-# Create an example dataframe with row names
+# Sample data frame
 df <- data.frame(
-  Age = c(25, 30, 35, 40),
-  Gender = c("Female", "Male", "Male", "Male")
+  Checkbox = c(TRUE, FALSE, TRUE),
+  Value1 = c(10, 20, 30),
+  Value2 = c("A", "B", "C")
 )
 
-# Assign row names to the dataframe
-rownames(df) <- c("Alice", "Bob", "Charlie", "David")
+# Create a crosstalk filter
+checkbox_filter <- SharedData$new(df, key = ~Checkbox)
 
-# Print the dataframe
-print(df)
-
-
-# Define UI
-ui <- fluidPage(
-  titlePanel("Select People"),
-  fluidRow(
-    column(6, checkboxGroupInput("checkGroup", "Name", choices = rownames(df)))
-  ),
-  fluidRow(
-    column(12, tableOutput("checkedTable"))
+# Create a DataTable with crosstalk
+datatable(
+  checkbox_filter,
+  filter = "top",
+  extensions = 'Select',
+  options = list(
+    columnDefs = list(
+      list(
+        targets = 1,
+        render = JS(
+          "function(data, type, row, meta) {",
+          "if(type === 'display') {",
+          "return '<input type=\"checkbox\" class=\"select-checkbox\"/>';",
+          "} else {",
+          "return data;",
+          "}"
+        )
+      )
+    )
   )
-)
+) %>%
+  formatStyle(
+    'Checkbox',
+    target = 'row',
+    valueColumns = 'Checkbox',
+    backgroundColor = styleEqual(TRUE, 'lightblue')
+  )
 
-# Define server logic
-server <- function(input, output) {
-  # Display table with checked rows
-  output$checkedTable <- renderTable({
-    req(input$checkGroup)
-    checked_rows <- input$checkGroup
-    df[checked_rows, , drop = FALSE]
-  }, rownames = TRUE)
-}
-
-# Run the application
-shinyApp(ui = ui, server = server)
+# Render corresponding rows based on checkbox selection
+renderDT({
+  filtered_df <- datatable_proxy(checkbox_filter)
+  filtered_df
+})
 ```
