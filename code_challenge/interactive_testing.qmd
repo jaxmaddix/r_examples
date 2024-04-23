@@ -4,50 +4,28 @@ format: html
 editor: source
 ---
 ```{R}
+library(tidyverse)
 library(crosstalk)
-library(DT)
+library(ggsci)
+library(scales)
+library(plotly)
 
 # Sample data frame
 df <- data.frame(
-  Checkbox = c(TRUE, FALSE, TRUE),
-  Value1 = c(10, 20, 30),
-  Value2 = c("A", "B", "C")
+  Name = c("Abby", "Bill", "Claire", "David"),
+  Value1 = c(15, 20, 18, 21),
+  Value2 = c("F", "M", "F", "M")
 )
 
-# Create a crosstalk filter
-checkbox_filter <- SharedData$new(df, key = ~Checkbox)
+df_hl <- highlight_key(df)
 
-# Create a DataTable with crosstalk
-datatable(
-  checkbox_filter,
-  filter = "top",
-  extensions = 'Select',
-  options = list(
-    columnDefs = list(
-      list(
-        targets = 1,
-        render = JS(
-          "function(data, type, row, meta) {",
-          "if(type === 'display') {",
-          "return '<input type=\"checkbox\" class=\"select-checkbox\"/>';",
-          "} else {",
-          "return data;",
-          "}"
-        )
-      )
-    )
-  )
-) %>%
-  formatStyle(
-    'Checkbox',
-    target = 'row',
-    valueColumns = 'Checkbox',
-    backgroundColor = styleEqual(TRUE, 'lightblue')
-  )
+df_f <- bscols(widths = c(3, 10),
+       filter_select("Name", 
+                     "Name", 
+                     df_hl, 
+                     ~ Name,
+                     multiple = FALSE)
+)
 
-# Render corresponding rows based on checkbox selection
-renderDT({
-  filtered_df <- datatable_proxy(checkbox_filter)
-  filtered_df
-})
+print(df_f)
 ```
