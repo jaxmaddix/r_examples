@@ -418,4 +418,10 @@ To build the actual graph, I now understood how rstudio populated the graph, so 
 * facet_wrap() to add 3 separate graphs
 * coord_flip() to flip the graph axes
 * theme elements for a border
+
+
+* future:
+  * purr package
+  * loop
+  * functions
  
