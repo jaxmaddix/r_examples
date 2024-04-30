@@ -1,0 +1,12 @@
+---
+title: "Reflection"
+format: html
+---
+
+Honestly this has been one of the most useful classs I have very taken.  I learned so much and the content is very useful for my current and future work. 
+
+Before taking this class, I had tried to take statistics classes in undergrad.  However, they wanted us to use R but didn't teach it. I ended up having to drop that course not because I couldn't understand th statistics, but simply because I wasn't able to complete the homework in R. 
+
+I have also struggled with data presentation,efficiency, and organization when trying to use excel to do similar tasks, because excel doesn't allow you to see a history of your work.
+
+A lot of classes that we take, we don't really use the content again unless we take another class that directly build on it.  However, I think this class is unique because you had us do projects that not only taught us specific (useful) things, but also helped us understand how to problem solve and will allow us to solve new problems in the future.
